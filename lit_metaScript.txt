@@ -1,0 +1,21 @@
+CREATE TABLE lit_meta
+(
+    item_id integer NOT NULL,
+    m_id integer NOT NULL,
+    CONSTRAINT lit_meta_pkey PRIMARY KEY (item_id, m_id),
+    CONSTRAINT item_id FOREIGN KEY (item_id)
+        REFERENCES public.lititem (item_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT m_id FOREIGN KEY (m_id)
+        REFERENCES public.metadata (m_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.lit_meta
+    OWNER to postgres;

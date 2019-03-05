@@ -1,0 +1,107 @@
+CREATE TABLE lititem
+(
+    item_id serial,
+    investor_com_id character varying COLLATE pg_catalog."default",
+    investor_com_id_old character varying COLLATE pg_catalog."default",
+    old_code_in_use character varying(1) COLLATE pg_catalog."default",
+    title character varying(200) COLLATE pg_catalog."default" NOT NULL,
+    language_version character varying(2) COLLATE pg_catalog."default",
+    delivery_type character varying(2) COLLATE pg_catalog."default",
+    series_specific character varying COLLATE pg_catalog."default",
+    active character varying(10) COLLATE pg_catalog."default" NOT NULL,
+    rebranded character varying(3) COLLATE pg_catalog."default",
+    content_type character varying(50) COLLATE pg_catalog."default",
+    frequency character varying(50) COLLATE pg_catalog."default",
+    search_keyword character varying COLLATE pg_catalog."default",
+    description character varying COLLATE pg_catalog."default",
+    create_date date NOT NULL DEFAULT CURRENT_DATE,
+    updated_date date NOT NULL DEFAULT CURRENT_DATE,
+    CONSTRAINT lititem_pkey PRIMARY KEY (item_id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.lititem
+    OWNER to postgres;
+
+    
+    
+CREATE TABLE public.metadata
+(
+    m_id serial,
+    meta_name character varying(1) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT metadata_pkey PRIMARY KEY (m_id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.metadata
+    OWNER to postgres;  
+    
+    
+    
+CREATE TABLE public.fund
+(
+    fund_id serial,
+    fund_name character varying COLLATE pg_catalog."default" NOT NULL,
+    fund_short_name character varying COLLATE pg_catalog."default",
+    CONSTRAINT fund_pkey PRIMARY KEY (fund_id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.fund
+    OWNER to postgres;
+    
+
+
+CREATE TABLE public.lit_fund
+(
+    item_id integer NOT NULL,
+    fund_id integer NOT NULL,
+    CONSTRAINT fund_id FOREIGN KEY (fund_id)
+        REFERENCES public.fund (fund_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT item_id FOREIGN KEY (item_id)
+        REFERENCES public.lititem (item_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.lit_fund
+    OWNER to postgres;
+
+
+
+CREATE TABLE public.lit_meta
+(
+    item_id integer NOT NULL,
+    m_id integer NOT NULL,
+    CONSTRAINT lit_meta_pkey PRIMARY KEY (item_id, m_id),
+    CONSTRAINT item_id FOREIGN KEY (item_id)
+        REFERENCES public.lititem (item_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT m_id FOREIGN KEY (m_id)
+        REFERENCES public.metadata (m_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.lit_meta
+    OWNER to postgres;

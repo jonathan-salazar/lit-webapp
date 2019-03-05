@@ -1,0 +1,20 @@
+CREATE TABLE lit_fund
+(
+    item_id integer NOT NULL,
+    fund_id integer NOT NULL,
+    CONSTRAINT fund_id FOREIGN KEY (fund_id)
+        REFERENCES public.fund (fund_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT item_id FOREIGN KEY (item_id)
+        REFERENCES public.lititem (item_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.lit_fund
+    OWNER to postgres;

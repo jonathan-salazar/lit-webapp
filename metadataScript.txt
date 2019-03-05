@@ -1,0 +1,13 @@
+CREATE TABLE public.metadata
+(
+    m_id serial,
+    meta_name character varying(1) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT metadata_pkey PRIMARY KEY (m_id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.metadata
+    OWNER to postgres;

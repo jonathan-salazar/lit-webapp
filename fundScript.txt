@@ -1,0 +1,15 @@
+CREATE TABLE fund
+(
+    fund_id serial,
+    fund_name character varying COLLATE pg_catalog."default" NOT NULL,
+    fund_short_name character varying COLLATE pg_catalog."default",
+    CONSTRAINT fund_pkey PRIMARY KEY (fund_id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.fund
+    OWNER to postgres;
+    
