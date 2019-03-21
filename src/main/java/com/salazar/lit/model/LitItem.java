@@ -29,9 +29,10 @@ public class LitItem {
     Date createDate;
     Date updatedDate;
     String [] metaData;
+    String [] fundData;
 //    MetaData metaData;
 //    LitFund litFund;
-//    
+//
 //    public MetaData getMetaData() {
 //        return metaData;
 //    }
@@ -44,10 +45,18 @@ public class LitItem {
         return metaData;
     }
 
-    public void setMetaData(String[] metaData) {
+    public String[] getFundData() {
+		return fundData;
+	}
+
+	public void setFundData(String[] fundData) {
+		this.fundData = fundData;
+	}
+
+	public void setMetaData(String[] metaData) {
         this.metaData = metaData;
     }
-    
+
     public int getItemId() {
         return itemId;
     }
