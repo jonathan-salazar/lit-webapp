@@ -29,7 +29,44 @@ public class LitItemService {
     public void addLitItem(LitItem litItem) throws LitException{
         //Check all attributes are correctly inserted
         LitItemDAO litDAO = new LitItemDAOSqlImpl();
-        litDAO.insert(litItem);
+        
+        String investorComId;
+        String idLanguage = litItem.getLangVersion();
+        String idDelivery = litItem.getDeliveryType();
+        
+        //Create a new column in table for num val or is that the same as itemId????
+        int idNumericVal = 1; 
+        
+        String idSeries = litItem.getSeries();
+        String idContentType = litItem.getContentType();
+        String padding = "0000";
+        
+        if (idLanguage != null && idDelivery != null ) {
+        	if(idNumericVal < 10) {
+        		padding = "0000";
+        	} else if(idNumericVal >= 10 && idNumericVal < 100) {
+        		padding = "000";
+        	} else if(idNumericVal >= 100 && idNumericVal < 1000) {
+        		padding = "00";
+        	} else if(idNumericVal >= 1000 && idNumericVal < 10000) {
+        		padding = "0";
+        	}
+        	
+        	investorComId = idLanguage + "-" + padding + idNumericVal + "-" + idDelivery;
+        	
+        	if(idSeries != null ) {
+        		investorComId = investorComId + "-" + idSeries;
+        	}
+        	
+        	if(idContentType != null) {
+        		investorComId = investorComId + "-" + idContentType;
+        	}
+        	
+        	litItem.setInvestorComId(investorComId);
+        	litDAO.insert(litItem);
+        } else {
+        	System.out.println("Either language version or delivery type is not defined.");
+        }
     }
 
     public void addLitFund(LitFund litFund) throws LitException{

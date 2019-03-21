@@ -19,14 +19,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class IndexController {
     @GetMapping("/index")
     public String indexAction(HttpServletRequest request, String name, Model model) {
-        model.addAttribute("name", name);
+
+
+    	model.addAttribute("name", name);
+
+
         return "index";
     }
-    
+
     @GetMapping("/sample")
     public String sampleAction(HttpServletRequest request, String name, Model model) {
         model.addAttribute("name", name);
         return "sample";
     }
-  
+
 }

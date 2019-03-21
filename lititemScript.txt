@@ -23,12 +23,12 @@ WITH (
 )
 TABLESPACE pg_default;
 
-ALTER TABLE public.lititem
+ALTER TABLE lititem
     OWNER to postgres;
 
     
     
-CREATE TABLE public.metadata
+CREATE TABLE metadata
 (
     m_id serial,
     meta_name character varying(1) COLLATE pg_catalog."default" NOT NULL,
@@ -39,12 +39,12 @@ WITH (
 )
 TABLESPACE pg_default;
 
-ALTER TABLE public.metadata
+ALTER TABLE metadata
     OWNER to postgres;  
     
     
     
-CREATE TABLE public.fund
+CREATE TABLE fund
 (
     fund_id serial,
     fund_name character varying COLLATE pg_catalog."default" NOT NULL,
@@ -56,21 +56,21 @@ WITH (
 )
 TABLESPACE pg_default;
 
-ALTER TABLE public.fund
+ALTER TABLE fund
     OWNER to postgres;
     
 
 
-CREATE TABLE public.lit_fund
+CREATE TABLE lit_fund
 (
     item_id integer NOT NULL,
     fund_id integer NOT NULL,
     CONSTRAINT fund_id FOREIGN KEY (fund_id)
-        REFERENCES public.fund (fund_id) MATCH SIMPLE
+        REFERENCES fund (fund_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT item_id FOREIGN KEY (item_id)
-        REFERENCES public.lititem (item_id) MATCH SIMPLE
+        REFERENCES lititem (item_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 )
@@ -79,22 +79,22 @@ WITH (
 )
 TABLESPACE pg_default;
 
-ALTER TABLE public.lit_fund
+ALTER TABLE lit_fund
     OWNER to postgres;
 
 
 
-CREATE TABLE public.lit_meta
+CREATE TABLE lit_meta
 (
     item_id integer NOT NULL,
     m_id integer NOT NULL,
     CONSTRAINT lit_meta_pkey PRIMARY KEY (item_id, m_id),
     CONSTRAINT item_id FOREIGN KEY (item_id)
-        REFERENCES public.lititem (item_id) MATCH SIMPLE
+        REFERENCES lititem (item_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT m_id FOREIGN KEY (m_id)
-        REFERENCES public.metadata (m_id) MATCH SIMPLE
+        REFERENCES metadata (m_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 )
@@ -103,5 +103,5 @@ WITH (
 )
 TABLESPACE pg_default;
 
-ALTER TABLE public.lit_meta
+ALTER TABLE lit_meta
     OWNER to postgres;
